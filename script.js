@@ -1,64 +1,148 @@
 const produits = [
-    { id: 1, nom: "Thé Vert Bio", prix: 12.99, image: "https://placehold.co/150" },
-    { id: 2, nom: "Café Arabica", prix: 8.50, image: "https://placehold.co/150" },
-    { id: 3, nom: "Infusion Menthe", prix: 5.00, image: "https://placehold.co/150" },
-    { id: 4, nom: "Chocolat Chaud", prix: 15.00, image: "https://placehold.co/150" },
-    
+  {
+    id: 1,
+    nom: "Thé Vert Bio",
+    prix: 12.99,
+    quantite: 1,
+    image: "https://placehold.co/150",
+  },
+  {
+    id: 2,
+    nom: "Café Arabica",
+    prix: 8.5,
+    quantite: 1,
+    image: "https://placehold.co/150",
+  },
+  {
+    id: 3,
+    nom: "Infusion Menthe",
+    prix: 5.0,
+    quantite: 1,
+    image: "https://placehold.co/150",
+  },
+  {
+    id: 4,
+    nom: "Chocolat Chaud",
+    prix: 15.0,
+    quantite: 1,
+    image: "https://placehold.co/150",
+  },
 ];
 
+let panier = [];
 
+/*===================================*/
 /*affichage des produits dans le DOM*/
+/*==================================*/
 
-for(let produit of produits){
-    const div = document.createElement('div');
-    div.classList.add("produit")
-    let image = document.createElement('img');
-    image.classList.add ("images");
-    image.src = produit.image;
-    image.alt = produit.nom ;
-    let nom = document.createElement('h3');
-    nom.textContent = produit.nom;
-    let price = document.createElement ('p');
-    price.textContent=produit.prix + "€";
-    let btn = document.createElement('button');
-    btn.textContent="Ajouter au panier"
+for (let produit of produits) {
+  const div = document.createElement("div");
+  div.classList.add("produit");
 
-    
-    let produitsContainer = document.getElementById('produits-container');
-    produitsContainer.appendChild(div);
-    div.appendChild(image);
-    div.appendChild(nom);
-    div.appendChild(price);
-    div.appendChild(btn)
-    
-   
+  let image = document.createElement("img");
+  image.classList.add("images");
+  image.src = produit.image;
+  image.alt = produit.nom;
+
+  let nom = document.createElement("h3");
+  nom.textContent = produit.nom;
+
+  let price = document.createElement("p");
+  price.textContent = produit.prix + "€";
+
+  let btn = document.createElement("button");
+  btn.textContent = "Ajouter au panier";
+
+  btn.addEventListener("click", () => {
+    ajouterPanier(produit);
+  });
+
+  let produitsContainer = document.getElementById("produits-container");
+  div.appendChild(image);
+  div.appendChild(nom);
+  div.appendChild(price);
+  div.appendChild(btn);
+
+  produitsContainer.appendChild(div);
 }
 
-console.log(btn)
 
+
+/*==================*/
 /*gestion du panier*/
+/*=================*/
 
-btn.addEventListener("click",()=>{
-    /*mettre la ul ici car pas besoin d'en recrée une pour chaque produit*/
-    for(let i = 0; i < produits.length;i++){
-        if(produit.nom === btn){}
-    }
+function ajouterPanier(produit) {
+  let produitsExistant = panier.find(
+    (produitDuPanier) => produitDuPanier.nom === produit.nom
+  );
 
-    
+  if (produitsExistant) {
+    produitsExistant.quantite++;
+  } else {
+    panier.push({
+      id: produit.id,
+      nom: produit.nom,
+      prix: produit.prix,
+      quantite: 1,
+    });
+  }
 
-    
-});
+  affichagePanier();
+}
 
+
+
+/*====================*/
 /*affichage du panier*/
+/*==================*/
 
-const ul = document.createElement ('ul');
-const li = document.createElement ('li');
-let quantité = document.createElement ('p');
-let sousTotal = document.createElement ('p')
+function affichagePanier() {
+  const panierContainer = document.getElementById("panier-liste");
+  panierContainer.textContent = "";
+
+  if (panier.length === 0) {
+    panierContainer.textContent = "Votre panier est vide";
+    return;
+  }
+
+  const ul = document.createElement("ul");
+
+  for (let produit of panier) {
+    const li = document.createElement("li");
+
+    const nomProduit = document.createElement("p");
+    nomProduit.textContent = produit.nom;
+
+    const prixUnitaire = document.createElement("p");
+    prixUnitaire.textContent = produit.prix;
+
+    const quantite = document.createElement("p");
+    quantite.textContent = produit.quantite;
+
+    const sousTotal = document.createElement("p");
+    const total = produit.prix * produit.quantite;
+    sousTotal.textContent = `Sous-total: ${total}€`;
+
+    const btnDelete = document.createElement("button");
+    btnDelete.textContent = "Enlever du panier";
+
+    btnDelete.addEventListener("click",()=>{
+        li.remove(ul)
+    })
+    
+    li.appendChild(nomProduit);
+    li.appendChild(prixUnitaire);
+    li.appendChild(quantite);
+    li.appendChild(sousTotal);
+    li.appendChild(btnDelete)
+    
+    ul.appendChild(li);
+  }
+
+  panierContainer.appendChild(ul);
+}
+
+affichagePanier();
 
 
-ul.appendChild(li);
-li.appendChild(nom);
-li.appendChild(price);
-li.appendChild(quantité);
-li.appendChild(sousTotal)
