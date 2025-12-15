@@ -66,8 +66,6 @@ for (let produit of produits) {
   produitsContainer.appendChild(div);
 }
 
-
-
 /*==================*/
 /*gestion du panier*/
 /*=================*/
@@ -90,8 +88,6 @@ function ajouterPanier(produit) {
 
   affichagePanier();
 }
-
-
 
 /*====================*/
 /*affichage du panier*/
@@ -127,16 +123,16 @@ function affichagePanier() {
     const btnDelete = document.createElement("button");
     btnDelete.textContent = "Enlever du panier";
 
-    btnDelete.addEventListener("click",()=>{
-        li.remove(ul)
-    })
-    
+    btnDelete.addEventListener("click", () => {
+      li.remove(ul);
+    });
+
     li.appendChild(nomProduit);
     li.appendChild(prixUnitaire);
     li.appendChild(quantite);
     li.appendChild(sousTotal);
-    li.appendChild(btnDelete)
-    
+    li.appendChild(btnDelete);
+
     ul.appendChild(li);
   }
 
@@ -145,4 +141,55 @@ function affichagePanier() {
 
 affichagePanier();
 
+/*=============================*/
+/*====Calculs==================*/
+/*=============================*/
 
+let totalSection = document.getElementById("total-section");
+let montantTotal = document.getElementById('montant-total');
+
+function calculTotal() {
+    
+    let total = 0;
+    
+    for (let produit of panier) {
+    let total = produit.prix * produit.quantite;
+    montantTotal.textContent = `${total} + "€"` ;
+  }
+
+  
+}
+
+calculTotal(montantTotal)
+console.log (montantTotal)
+
+
+/*===========================================*/
+/*========Validation de commande ===========*/
+/*==========================================*/
+
+let btnCommander = document.getElementById("btn-commander");
+let input = document.getElementById("email-client");
+
+btnCommander.addEventListener("click", () => {
+  function validerCommande() {
+    input.textContent = input.value;
+    const message = document.getElementById("error-message");
+
+    if (panier.length === 0) {
+      message.textContent = "Votre panier est vide";
+      return;
+    }
+
+    const regexAdresseMail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const msgError = document.getElementById('error-message');
+    const msgValid = document.getElementById('valid-message');
+    if (!regexAdresseMail.test(input)) {
+      msgError.textContent = "Veuillez entrer une adresse e-mail valide.";
+      msgError.style.color = "red";
+      msgError.style.fontSize = "x-small";
+      msgError.style.fontFamily = "Roboto";
+    }
+   return;}
+  validerCommande();
+});
