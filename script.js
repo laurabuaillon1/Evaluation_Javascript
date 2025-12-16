@@ -4,28 +4,28 @@ const produits = [
     nom: "Thé Vert Bio",
     prix: 12.99,
     quantite: 1,
-    image: "https://placehold.co/150",
+    image: "https://www.coffee-webstore.com/modules/prestablog/views/img/grid-for-1-7/up-img/426.jpg",
   },
   {
     id: 2,
     nom: "Café Arabica",
     prix: 8.5,
     quantite: 1,
-    image: "https://placehold.co/150",
+    image: "https://www.losprimos.fr/sites/default/files/inline-images/caf%C3%A9%20arabica.jpg",
   },
   {
     id: 3,
     nom: "Infusion Menthe",
     prix: 5.0,
     quantite: 1,
-    image: "https://placehold.co/150",
+    image: "https://www.herboristerieduvalmont.com/mes-remedes-naturels/wp-content/uploads/2023/11/menthe-tisane-scaled.jpeg",
   },
   {
     id: 4,
     nom: "Chocolat Chaud",
     prix: 15.0,
     quantite: 1,
-    image: "https://placehold.co/150",
+    image: "https://www.cocktail.fr/wp-content/uploads/2017/05/cocktail.fr-44087-1013x675.jpg.webp",
   },
 ];
 

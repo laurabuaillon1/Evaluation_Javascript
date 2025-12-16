@@ -1,0 +1,157 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background:linear-gradient(80deg,#1f1800,#301d01);
+   
+}
+
+/*texte*/
+h1{
+    background-color: black;
+    font-family: "Roboto", sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+    font-style: normal;
+    color: rgb(255, 255, 255);
+    display: flex;
+    justify-content: center;
+    padding: 8px 0px;
+
+}
+
+h2{
+    margin: 16px 0px;
+    font-family: "Roboto", sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+    font-style: normal;
+    color: rgb(255, 255, 255);
+    display: flex;
+    justify-content: center;
+}
+
+.h2-panier{
+    margin: 16px 0px;
+    font-family: "Roboto", sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+    font-style: normal;
+    color: rgb(0, 0, 0);
+    display: flex;
+    justify-content: center;
+}
+
+h3{
+    
+    font-family: "Roboto", sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    font-style: normal;
+    color: black;
+    
+}
+
+p{
+    font-family: "Roboto", sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    font-style: normal;
+    color: black;
+}
+
+/*grid produits*/
+.grid-produits{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin: 0px 16px;
+}
+
+.produit{
+    
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    width: 100%;
+    padding: 8px;
+    gap: 8px;
+    border-radius: 8px;
+    box-shadow:  0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    
+}
+
+.images{
+    border-radius: 4px;
+}
+
+button{
+    padding: 8px;
+    background-color: rgb(219, 219, 219);
+    border-radius: 4px;
+    border: none;
+    font-family: "Roboto", sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    font-style: normal;
+    color: rgb(51, 51, 51);
+}
+
+/*section panier*/
+#panier-section{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    background-color: white;
+    margin:  16px;
+    padding: 8px;
+    gap: 8px;
+    border-radius: 8px;
+    box-shadow:  0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.commande-box{
+     display: flex;
+    justify-content: center;
+    flex-direction: column;
+    background-color: white;
+    padding: 8px;
+    gap: 8px;
+    border-radius: 8px;
+    box-shadow:  0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+#email-client{
+   height: 30px;
+    border-radius: 4px;
+    border: 1px solid rgba(128, 128, 128, 0.226);
+}
+
+ul{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+li{
+    padding: 8px;
+    list-style: none;
+    border-radius: 8px;
+    border: 1px solid rgba(128, 128, 128, 0.226);
+    width: 100%;
+}
+
+#panier-liste{
+    font-family: "Roboto", sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    font-style: normal;
+    color: black;
+    padding: 16px 0px;
+}
