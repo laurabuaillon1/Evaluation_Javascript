@@ -111,17 +111,27 @@ function affichagePanier() {
     nomProduit.textContent = produit.nom;
 
     const prixUnitaire = document.createElement("p");
-    prixUnitaire.textContent = produit.prix;
+    prixUnitaire.textContent = produit.prix + "€";
 
     const quantite = document.createElement("p");
-    quantite.textContent = produit.quantite;
-
+    quantite.textContent = "x" + produit.quantite;
+    
+    /*=============================*/
+    /*====Calculs==================*/
+    /*=============================*/
     const sousTotal = document.createElement("p");
     const total = produit.prix * produit.quantite;
     sousTotal.textContent = `Sous-total: ${total}€`;
 
+    // let montantTotal = document.getElementById("montant-total");
+    // montantTotal.textContent = total;
+
+    let montantTotal = document.getElementById("montant-total");
+    montantTotal.textContent = total;
+
+    /******************************/
     const btnDelete = document.createElement("button");
-    btnDelete.textContent = "Enlever du panier";
+    btnDelete.textContent = "Supprimer du panier";
 
     btnDelete.addEventListener("click", () => {
       li.remove(ul);
@@ -141,25 +151,6 @@ function affichagePanier() {
 
 affichagePanier();
 
-/*=============================*/
-/*====Calculs==================*/
-/*=============================*/
-
-let totalSection = document.getElementById("total-section");
-let montantTotal = document.getElementById("montant-total");
-
-function calculTotal() {
-  let total = 0;
-  for (let produit of panier) {
-    
-    total = produit.prix * produit.quantite;
-    montantTotal.textContent = `${total} + "€"`;
-  }
-}
-
-calculTotal(montantTotal);
-console.log(montantTotal);
-
 /*===========================================*/
 /*========Validation de commande ===========*/
 /*==========================================*/
@@ -172,12 +163,6 @@ const msgFeedback = document.getElementById("message-feedback");
 btnCommander.addEventListener("click", () => {
   function validerCommande() {
     input.textContent = input.value;
-    const message = document.getElementById("error-message");
-
-    if (panier.length === 0) {
-      message.textContent = "Votre panier est vide";
-      return;
-    }
 
     if (!regexAdresseMail.test(input.value)) {
       msgFeedback.textContent = "Veuillez entrer une adresse e-mail valide.";
@@ -194,4 +179,18 @@ btnCommander.addEventListener("click", () => {
     return;
   }
   validerCommande();
+
+  let msgCommande = document.getElementById("message-confirmation");
+  if (!regexAdresseMail.test(input.value)) {
+    msgCommande.textContent =
+      "Impossible de passer la commande l'adresse mail n'est pas valide";
+    msgCommande.style.color = "red";
+    msgCommande.style.fontSize = "Large";
+    msgCommande.style.fontFamily = "Roboto";
+  } else {
+    msgCommande.textContent = "Commande validée";
+    msgCommande.style.color = "green";
+    msgCommande.style.fontSize = "Large";
+    msgCommande.style.fontFamily = "Roboto";
+  }
 });
