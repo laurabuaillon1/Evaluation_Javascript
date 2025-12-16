@@ -146,23 +146,19 @@ affichagePanier();
 /*=============================*/
 
 let totalSection = document.getElementById("total-section");
-let montantTotal = document.getElementById('montant-total');
+let montantTotal = document.getElementById("montant-total");
 
 function calculTotal() {
+  let total = 0;
+  for (let produit of panier) {
     
-    let total = 0;
-    
-    for (let produit of panier) {
-    let total = produit.prix * produit.quantite;
-    montantTotal.textContent = `${total} + "€"` ;
+    total = produit.prix * produit.quantite;
+    montantTotal.textContent = `${total} + "€"`;
   }
-
-  
 }
 
-calculTotal(montantTotal)
-console.log (montantTotal)
-
+calculTotal(montantTotal);
+console.log(montantTotal);
 
 /*===========================================*/
 /*========Validation de commande ===========*/
@@ -170,6 +166,8 @@ console.log (montantTotal)
 
 let btnCommander = document.getElementById("btn-commander");
 let input = document.getElementById("email-client");
+const regexAdresseMail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const msgFeedback = document.getElementById("message-feedback");
 
 btnCommander.addEventListener("click", () => {
   function validerCommande() {
@@ -181,15 +179,19 @@ btnCommander.addEventListener("click", () => {
       return;
     }
 
-    const regexAdresseMail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const msgError = document.getElementById('error-message');
-    const msgValid = document.getElementById('valid-message');
-    if (!regexAdresseMail.test(input)) {
-      msgError.textContent = "Veuillez entrer une adresse e-mail valide.";
-      msgError.style.color = "red";
-      msgError.style.fontSize = "x-small";
-      msgError.style.fontFamily = "Roboto";
+    if (!regexAdresseMail.test(input.value)) {
+      msgFeedback.textContent = "Veuillez entrer une adresse e-mail valide.";
+      msgFeedback.style.color = "red";
+      msgFeedback.style.fontSize = "x-small";
+      msgFeedback.style.fontFamily = "Roboto";
+    } else {
+      msgFeedback.textContent = "Adresse mail valide";
+      msgFeedback.style.color = "green";
+      msgFeedback.style.fontSize = "x-small";
+      msgFeedback.style.fontFamily = "Roboto";
     }
-   return;}
+    console.log(input.value);
+    return;
+  }
   validerCommande();
 });
