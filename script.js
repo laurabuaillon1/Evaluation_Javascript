@@ -4,28 +4,32 @@ const produits = [
     nom: "Thé Vert Bio",
     prix: 12.99,
     quantite: 1,
-    image: "https://www.coffee-webstore.com/modules/prestablog/views/img/grid-for-1-7/up-img/426.jpg",
+    image:
+      "https://www.coffee-webstore.com/modules/prestablog/views/img/grid-for-1-7/up-img/426.jpg",
   },
   {
     id: 2,
     nom: "Café Arabica",
     prix: 8.5,
     quantite: 1,
-    image: "https://www.losprimos.fr/sites/default/files/inline-images/caf%C3%A9%20arabica.jpg",
+    image:
+      "https://www.losprimos.fr/sites/default/files/inline-images/caf%C3%A9%20arabica.jpg",
   },
   {
     id: 3,
     nom: "Infusion Menthe",
     prix: 5.0,
     quantite: 1,
-    image: "https://www.herboristerieduvalmont.com/mes-remedes-naturels/wp-content/uploads/2023/11/menthe-tisane-scaled.jpeg",
+    image:
+      "https://www.herboristerieduvalmont.com/mes-remedes-naturels/wp-content/uploads/2023/11/menthe-tisane-scaled.jpeg",
   },
   {
     id: 4,
     nom: "Chocolat Chaud",
     prix: 15.0,
     quantite: 1,
-    image: "https://www.cocktail.fr/wp-content/uploads/2017/05/cocktail.fr-44087-1013x675.jpg.webp",
+    image:
+      "https://www.cocktail.fr/wp-content/uploads/2017/05/cocktail.fr-44087-1013x675.jpg.webp",
   },
 ];
 
@@ -93,8 +97,17 @@ function ajouterPanier(produit) {
 /*affichage du panier*/
 /*==================*/
 
+function calculerMontantTotal() {
+  let total = 0;
+  for (let produit of panier) {
+    total += produit.prix * produit.quantite;
+  }
+  return total;
+}
+
 function affichagePanier() {
   const panierContainer = document.getElementById("panier-liste");
+  let montantTotal = document.getElementById("montant-total");
   panierContainer.textContent = "";
 
   if (panier.length === 0) {
@@ -106,6 +119,7 @@ function affichagePanier() {
 
   for (let produit of panier) {
     const li = document.createElement("li");
+    const sousTotalArticle = produit.prix * produit.quantite;
 
     const nomProduit = document.createElement("p");
     nomProduit.textContent = produit.nom;
@@ -115,31 +129,60 @@ function affichagePanier() {
 
     const quantite = document.createElement("p");
     quantite.textContent = "x" + produit.quantite;
-    
-    /*=============================*/
-    /*====Calculs==================*/
-    /*=============================*/
-    const sousTotal = document.createElement("p");
-    const total = produit.prix * produit.quantite;
-    sousTotal.textContent = `Sous-total: ${total}€`;
 
-    // let montantTotal = document.getElementById("montant-total");
-    // montantTotal.textContent = total;
+    /*bouton ajouter produit*/
 
-    let montantTotal = document.getElementById("montant-total");
-    montantTotal.textContent = total;
+    const btnAjouterProduit = document.createElement("button");
+    btnAjouterProduit.textContent = "ajouter un produit";
 
-    /******************************/
+    btnAjouterProduit.addEventListener("click", () => {
+      produit.quantite++;
+      affichagePanier();
+    });
+
+    /*bouton supprimer produit*/
+    const btnSupProduit = document.createElement("button");
+    btnSupProduit.textContent = "supprimer un produit";
+
+    btnSupProduit.addEventListener("click", () => {
+      if (produit.quantite > 1) {
+        produit.quantite--;
+        affichagePanier();
+      } else {
+        li.remove(produit);
+      }
+    });
+
+    /*bouton supprimer produit peux importe le nb de produit*/
+
     const btnDelete = document.createElement("button");
     btnDelete.textContent = "Supprimer du panier";
 
     btnDelete.addEventListener("click", () => {
-      li.remove(ul);
+      // Trouve l'index du produit dans le tableau panier
+      const index = panier.findIndex((p) => p.nom === produit.nom);
+
+      // Supprime le produit du tableau
+      if (index !== -1) {
+        panier.splice(index, 1);
+      }
+
+      // Réaffiche le panier
+      affichagePanier();
     });
+
+    /*=============================*/
+    /*====Calculs==================*/
+    /*=============================*/
+    const sousTotal = document.createElement("p");
+    sousTotal.textContent = `Sous-total: ${sousTotalArticle}€`;
+    /******************************/
 
     li.appendChild(nomProduit);
     li.appendChild(prixUnitaire);
     li.appendChild(quantite);
+    li.appendChild(btnAjouterProduit);
+    li.appendChild(btnSupProduit);
     li.appendChild(sousTotal);
     li.appendChild(btnDelete);
 
@@ -147,6 +190,9 @@ function affichagePanier() {
   }
 
   panierContainer.appendChild(ul);
+
+  const totalFinal = calculerMontantTotal();
+  montantTotal.textContent = totalFinal.toFixed(2);
 }
 
 affichagePanier();
@@ -160,24 +206,25 @@ let input = document.getElementById("email-client");
 const regexAdresseMail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const msgFeedback = document.getElementById("message-feedback");
 
-btnCommander.addEventListener("click", () => {
-  function validerCommande() {
-    input.textContent = input.value;
+function validerCommande() {
+  input.textContent = input.value;
 
-    if (!regexAdresseMail.test(input.value)) {
-      msgFeedback.textContent = "Veuillez entrer une adresse e-mail valide.";
-      msgFeedback.style.color = "red";
-      msgFeedback.style.fontSize = "x-small";
-      msgFeedback.style.fontFamily = "Roboto";
-    } else {
-      msgFeedback.textContent = "Adresse mail valide";
-      msgFeedback.style.color = "green";
-      msgFeedback.style.fontSize = "x-small";
-      msgFeedback.style.fontFamily = "Roboto";
-    }
-    console.log(input.value);
-    return;
+  if (!regexAdresseMail.test(input.value)) {
+    msgFeedback.textContent = "Veuillez entrer une adresse e-mail valide.";
+    msgFeedback.style.color = "red";
+    msgFeedback.style.fontSize = "x-small";
+    msgFeedback.style.fontFamily = "Roboto";
+  } else {
+    msgFeedback.textContent = "Adresse mail valide";
+    msgFeedback.style.color = "green";
+    msgFeedback.style.fontSize = "x-small";
+    msgFeedback.style.fontFamily = "Roboto";
   }
+  console.log(input.value);
+  return;
+}
+
+btnCommander.addEventListener("click", () => {
   validerCommande();
 
   let msgCommande = document.getElementById("message-confirmation");
